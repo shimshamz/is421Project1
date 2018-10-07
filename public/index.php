@@ -11,6 +11,7 @@ class main  {
     static public function start($filename) {
         $records = csv::getRecords($filename);
         $table = html::generateTable($records);
+        system::printPage($table);
     }
 }
 class html {
@@ -84,6 +85,11 @@ class csv {
         }
         fclose($file);
         return $records;
+    }
+}
+class system {
+    public static function printPage($page) {
+        echo $page;
     }
 }
 class record {
