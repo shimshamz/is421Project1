@@ -10,7 +10,61 @@ main::start("example.csv");
 class main  {
     static public function start($filename) {
         $records = csv::getRecords($filename);
+        $table = html::generateTable($records);
     }
+}
+class html {
+    public static function generateTable($records) {
+        $html = '<table class="">';
+        $count = 0;
+        foreach ($records as $record) {
+            if($count == 0) {
+                $array = $record->returnArray();
+                $fields = array_keys($array);
+                $values = array_values($array);
+                $row = html::tableHeader($fields);
+                $html .= html::tableRow($row);
+                $row = html::tableColumn($values);
+                $html .= html::tableRow($row);
+                //print_r($fields);
+                //print_r($values);
+            } else {
+                $array = $record->returnArray();
+                $values = array_values($array);
+                $row = html::tableColumn($values);
+                $html .= html::tableRow($row);
+                //print_r($values);
+            }
+            $count++;
+        }
+        $html .= '</table>';
+        return $html;
+    }
+    public static function tableRow($row) {
+        $html = '<tr>';
+        $html .= $row;
+        $html .= '</tr>';
+        return $html;
+    }
+    public static function tableColumn($values) {
+        $html = '';
+        foreach ($values as $value) {
+            $html .= '<td>';
+            $html .= $value;
+            $html .= '</td>';
+        }
+        return $html;
+    }
+    public static function tableHeader($fields) {
+        $html = '';
+        foreach ($fields as $field) {
+            $html .= '<th>';
+            $html .= $field;
+            $html .= '</th>';
+        }
+        return $html;
+    }
+
 }
 class csv {
     static public function getRecords($filename) {
