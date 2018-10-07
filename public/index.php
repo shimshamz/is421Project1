@@ -15,7 +15,8 @@ class main  {
 }
 class html {
     public static function generateTable($records) {
-        $html = '<table class="">';
+        $html = '<table class="table table-striped">';
+        $html .= '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
         $count = 0;
         foreach ($records as $record) {
             if($count == 0) {
