@@ -10,14 +10,20 @@ main::start("example.csv");
 class main  {
     static public function start($filename) {
         $records = csv::getRecords($filename);
-        $table = html::generateTable($records);
+        $table = html::createTable($records);
         system::printPage($table);
     }
 }
 class html {
-    public static function generateTable($records) {
+    public static function createTable($content) {
         $html = '<table class="table table-striped">';
-        $html .= '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
+        $html .= html::insertBootstrapLink();
+        $html .= html::populateTable($content);
+        $html .= '</table>';
+        return $html;
+    }
+    public static function populateTable($records) {
+        $html = '';
         $count = 0;
         foreach ($records as $record) {
             if($count == 0) {
@@ -39,7 +45,6 @@ class html {
             }
             $count++;
         }
-        $html .= '</table>';
         return $html;
     }
     public static function tableRow($row) {
@@ -64,6 +69,10 @@ class html {
             $html .= $field;
             $html .= '</th>';
         }
+        return $html;
+    }
+    public static function insertBootstrapLink() {
+        $html = '<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">';
         return $html;
     }
 
