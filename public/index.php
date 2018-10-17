@@ -10,14 +10,32 @@ main::start("example.csv");
 class main  {
     static public function start($filename) {
         $records = csv::getRecords($filename);
-        $table = html::createTable($records);
+        $table = html::setupHTML($records);
         system::printPage($table);
     }
 }
 class html {
+    public static function setupHTML($content) {
+        $html = '<html>';
+        $html .= html::insertHeadTags();
+        $html .= html::insertBodyTags($content);
+        $html .= '</html>';
+        return $html;
+    }
+    public static function insertHeadTags() {
+        $html = '<head>';
+        $html .= html::insertBootstrapLink();
+        $html .= '</head>';
+        return $html;
+    }
+    public static function insertBodyTags($content) {
+        $html = '<body>';
+        $html .= html::createTable($content);
+        $html .= '</body>';
+        return $html;
+    }
     public static function createTable($content) {
         $html = '<table class="table table-striped">';
-        $html .= html::insertBootstrapLink();
         $html .= html::populateTable($content);
         $html .= '</table>';
         return $html;
